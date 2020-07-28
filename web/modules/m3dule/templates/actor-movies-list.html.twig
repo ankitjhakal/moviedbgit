@@ -1,0 +1,44 @@
+{% if items.result %}
+  <h4 style="color:red";>{{ items.result }}</h4>
+{% else %}
+<table class="table table-dark table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Movie_name</th>
+      <th width=100px scope="col">Movie_poster</th>
+      <th scope="col">Role</th>
+      <th width=120px scope="col">Co-Stars</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+      <tr class="supercss">
+        <td><a class="atag" href="/node/{{ item.movie_url }}">{{ item.movie_name }}</td>
+        <td><img width=100px src={{ item.image_path }} class="img-thumbnail"></td>
+        <td>{{ item.actor_role }}</td>
+        <td class="cast">
+        {% for x in item.costars %}
+          <a class="atag costar-link" href="#"  data-nid={{ x.actor_id }} movie-nid={{ item.movie_url }}>{{ x.name }}</a><br>
+        {% endfor %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+
+
+
+<div class="costar_popup">
+  <div class="popup">
+    <div class="modal-header">
+      <div class="popupCloseButton">&times;</div>
+      <div class="modal-title"></div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-image"><img  width=100px src=""></div>
+      <div class="modal-role"></div>
+    </div>
+  </div>
+</div>
