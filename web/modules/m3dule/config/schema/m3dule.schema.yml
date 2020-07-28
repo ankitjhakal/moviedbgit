@@ -1,0 +1,7 @@
+system.menu.*.third_party.m3dule:
+  type: mapping
+  label: 'My module textfield'
+  mapping:
+    my_text_field:
+      type: text
+      label: 'My textfield'
