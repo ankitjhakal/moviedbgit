@@ -1,0 +1,386 @@
+<?php
+use Drupal\Core\Url;
+use \Drupal\Core\Entity\EntityInterface;
+use \Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\node\Entity\NodeType;
+use Drupal\Component\Utility\Xss;
+// use Drupal\Component\Utility\String;
+
+// use \Symfony\Component\HttpFoundation\RedirectResponse;
+
+// kint($query->where);
+// pretterier debug tool.
+// dpm($query->where);
+
+//     if ($condition['field'] == 'node.title') {
+//       $condition = array(
+//         'field' => 'node.nid',
+//         'value' => $view->exposed_raw_input['title'],
+//         'operator' => '=',
+//       );
+//     }
+//   }
+// }
+// use \Drupal\comment\CommentInterface;
+// use Drupal\Core\Url;
+// function m3dule_comment_links_alter(array &$links, CommentInterface $entity, array &$context) {
+//   $links['m3dule'] = array(
+//     '#theme' => 'links__comment__m3dule',
+//     '#attributes' => array(
+//       'class' => array(
+//         'links',
+//         'inline',
+//       ),
+//     ),
+//     '#links' => array(
+//       'comment-report' => array(
+//         'title' => t('Report'),
+//         'url' => Url::fromRoute('m3dule_movie', [
+//           'comment' => $entity
+//             ->id()
+//         ], [
+//           'query' => [
+//             'token' => \Drupal::getContainer()
+//               ->get('csrf_token')
+//               ->get("comment/{$entity->id()}/report"),
+//           ],
+//         ]),
+//       ),
+//     ),
+//   );
+// }
+
+// function m3dule_comment_links_alter(array &$links, CommentInterface $entity, array &$context) {
+//   // Unset the "login and register link" link
+//   if(isset($links['comment']['#links']['comment-login'])) {
+//     unset($links['comment']['#links']['comment-login']);
+//   }
+//   if(isset($links['comment']['#links']['comment-register'])) {
+//     unset($links['comment']['#links']['comment-register']);
+//   }
+// }
+/**
+ * Implements hook_update_N().
+ */
+ /**
+  * Defines the advertiser entity.
+  *
+  * @ingroup advertiser
+  *
+  * @ContentEntityType(
+  *   id = "advertiser",
+  *   label = @Translation("advertiser"),
+  *   base_table = "advertiser",
+  *   entity_keys = {
+  *     "id" = "id",
+  *     "uuid" = "uuid",
+  *   },
+  * )
+  */
+// function m3dule_update_8701() {
+//   \Drupal::entityDefinitionUpdateManager()->installEntityType(new ConfigEntityType([
+//     'id' => 'advertiser_type',
+//     'label' => new TranslatableMarkup('Advertiser Type'),
+//     'entity_keys' => ['id' => 'id', 'uuid' => 'uuid'],
+//     'config_export' => [
+//       'id',
+//     ],
+//     ]));
+// }
+/**
+ * Update 8001 - Create maestro_process_status entity.
+ */
+// function m3dule_update_8001() {
+//   //check if the table exists first.  If not, then create the entity.
+//   if(!db_table_exists('advertiser')) {
+//     \Drupal::entityTypeManager()->clearCachedDefinitions();
+//     \Drupal::entityDefinitionUpdateManager()
+//       ->installEntityType(\Drupal::entityTypeManager()->getDefinition('advertiser'));
+//   }
+//   else {
+//     return 'Process Status entity already exists';
+//   }
+// }
+
+// function m3dule_form_alter(&$form,\Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+//   // kint($form_id);
+//   if(in_array($form_id,['node_article_form','node_article_edit_form'])) {
+//     $form['body']['#states'] = [
+//       'visible'=> [
+//         ':input[name="field_with_body[value]"]' => ['checked' => TRUE],
+//       ]
+//     ];
+//
+//   }
+// }
+
+
+
+
+
+
+
+
+/**
+ * Enable the modules some_module and some_other_module.
+ */
+
+function m3dule_update_8810(&$sandbox) {
+  // $install_module_list = array(
+  //  'kint',
+  // );
+  // $uninstall_module_list = array(
+  // 'celebrate',
+  // );
+  // \Drupal::service('module_installer')->uninstall($uninstall_module_list);
+  // \Drupal::service('module_installer')->install($install_module_list);
+  $spec = [
+  'description' => 'My description',
+  'fields' => [
+    'myfield1' => [
+      'description' => 'Myfield1 description.',
+      'type' => 'varchar',
+      'length' => 10,
+      'not null' => TRUE,
+      'default' => '',
+    ],
+    'myfield2' => [
+      'description' => 'Myfield2 description',
+      'type' => 'text',
+      'not null' => TRUE,
+    ],
+  ],
+  'primary key' => ['myfield1'],
+];
+  $schema = Drupal\Core\Database\Database::getConnection()->schema();
+  $schema->createTable('mytable2', $spec);
+}
+
+function m3dule_views_query_alter($view, $query) {
+    $node=\Drupal::routeMatch()->getParameter('node');
+    if($node instanceof \Drupal\node\NodeInterface) {
+      $nid=$node->id();
+      $obj=entity_load('node',$nid);
+      $bundle=$obj->bundle();
+    }
+    // kint($bundle);
+    // kint($view->storage->get('id'));
+    // kint($view->current_display);
+  // if ($view->id() == 'my_views' && $view->getDisplay()->display['id'] == 'attachment_1') {
+    if (isset($bundle) && $view->id() == 'task1') {
+      // kint($query->where);
+      foreach ($query->where as &$condition_group) {
+        foreach ($condition_group['conditions'] as &$condition) {
+          if (isset($condition['field']) && ($condition['field'] == 'node_field_data.type')) {
+            // kint($condition['value']);
+              $condition['value']=$bundle;
+          }
+        }
+      }
+    }
+}
+
+function m3dule_entity_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if($entity->getEntityTypeId() == "node") {
+    $description = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'name' =>  'description',
+        'content' => ['#plain_text' => $entity->title->value],
+      ]
+    ];
+    $build['#attached']['html_head'][] = [$description, 'description'];
+  }
+}
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function m3dule_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if($display->getComponent('my_own_pseudo_field')) {
+    $build['my_own_pseudo_field'] = [
+      '#type' => 'markup',
+      '#markup' => '<h1>THis is my custom content from psuedo field</h1>',
+    ];
+  }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function m3dule_entity_extra_field_info() {
+  $extra = array();
+  foreach (NodeType::loadMultiple() as $bundle) {
+    $extra['node'][$bundle->Id()]['display']['my_own_pseudo_field'] = array(
+      'label' => t('my own field'),
+      'description' => t('This in my own pseudo-field'),
+      'weight' => 100,
+      'visible' => TRUE,
+    );
+  }
+  return $extra;
+}
+/**
+* Implemetation of hook_page_attachments function.
+* This function is used to attach a file to a set or subset of pages.
+* @param  $page an array of page on which file will be attached.
+*/
+
+function m3dule_page_attachments(array &$page) {
+  $page['#attached']['library'][] = 'm3dule/m3dule_css';
+}
+
+
+function m3dule_preprocess_page(&$variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $path = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
+  // kint($path);
+  if($path == "/m3dule/actorlist") {
+    // kint($variables);
+    $form = \Drupal::formBuilder()->getForm('Drupal\m3dule\Form\FilterByName');
+    $variables['override_form'] = [
+      'title' => t('test form'),
+      'form' => $form,
+    ];
+  }
+}
+// function m3dule_entity_presave(Drupal\Core\Entity\EntityInterface $entity) {
+//   $response = new RedirectResponse("/node");
+//   $response->send();
+//   // kint($entity);
+// }
+
+function template_preprocess_image_title_caption_formatter(&$variables) {
+  module_load_include('inc', 'image', 'image.field');
+  template_preprocess_image_formatter($variables);
+  // $variables['caption1'] = Drupal\Component\Utility\String::checkPlain($variables['item']->get('title')->getValue());
+  $variables['caption'] = Xss::filter($variables['item']->get('title')->getValue());
+  // kint($variables);
+}
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function m3dule_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $path = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
+  if ($path == "/m3dule/actorlist") {
+    $suggestions[] = 'page__searchform';
+  }
+}
+
+/**
+   * Implemetation of hook_theme function.
+   * This function is used to return a renderable array for different themes.
+   * @param  $existing, $type, $theme, $path
+   * @return mixed
+*/
+function m3dule_theme($existing, $type, $theme, $path) {
+  return array(
+    'movie_list' => array(
+      'variables' => array('items' => array(), 'form' => array(), 'title' => '',
+         'no_of_pages' => '', 'current_page' => '', 'word' => '')
+    ),
+    'actor_list' => array(
+      'variables' => array('items' => array(), 'title' => '', 'pager' => array())
+    ),
+    'actor_movies_list' => array(
+      'variables' => array('items' => array(), 'title' => '')
+    ),
+    'filterbyname' => array(
+      'render element' => 'form',
+    ),
+    'list' => array(
+      'variables' => array('items' => array(), 'title' => '')
+    ),
+    'link_block' => array(
+      'variables' => array('loginlink' => '', 'registerlink' => ''),
+    ),
+    'item_form' => array(
+      'variables' => array('title' => '', 'form' => array()),
+    ),
+    'image_title_caption_formatter' => array(
+      'variables' => array('item' => NULL, 'item_attributes' => NULL, 'url' => NULL, 'image_style' => NULL),
+    ),
+  );
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function m3dule_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  if($form_id === 'menu_add_form' || $form_id === 'menu_edit_form') {
+    m3dule_alter_menu_forms($form, $form_state, $form_id);
+    // kint($form_id);
+  }
+}
+
+/**
+ * Handles the form alter for the menu_add_form and menu_edit_form forms.
+ */
+function m3dule_alter_menu_forms(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  $menu = $form_state->getFormObject()->getEntity();
+  if(isset($form['links'])) {
+    $form['links']['#weight'] = 2;
+  }
+  $form['series_connector'] = array(
+    '#type' => 'entity_autocomplete',
+    '#target_type' => 'node',
+    '#title' => t('Connect menu to specific series'),
+    '#description' => t('Connect menu to specific series'),
+    '#selection_settings' => array(
+      'target_bundles' => array('actor','movie'),
+    ),
+    '#default_value' => (isset($seriesId) && is_numeric($seriesId))? \Drupal\node\Entity\Node::load($seriesId):NULL,
+    '#weight' => 1);
+  $form['#entity_builders'][] = 'm3dule_form_menu_add_form_builder';
+}
+
+/**
+ * Entity builder for the menu configuration entity.
+ */
+function m3dule_form_menu_add_form_builder($entity_type, \Drupal\system\Entity\Menu $menu, &$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  // kint($menu);
+  // die();
+  if($form_state->getValue('series_connector')) {
+    $menu->setThirdPartySetting('m3dule', 'series_connector', $form_state->getValue('series_connector'));
+    return;
+  }
+  $menu->unsetThirdPartySetting('m3dule', 'series_connector');
+}
+//
+// function m3dule_module_implements_alter(&$implementations, $hook) {
+//   switch ($hook) {
+//    // Move our hook_entity_type_alter() implementation to the end of the list.
+//    case 'entity_type_alter':
+//      $group = $implementations['m3dule'];
+//      unset($implementations['m3dule']);
+//      $implementations['m3dule'] = $group + $implementations;
+//      break;
+//  }
+// }
+function m3dule_module_implements_alter(&$implementations, $hook) {
+  switch ($hook) {
+
+    // Move our hook_entity_type_alter() implementation to the end of the list.
+    case 'form_alter':
+      $group = $implementations['m3dule'];
+      unset($implementations['m3dule']);
+      $implementations['m3dule'] = $group;
+      break;
+
+    // Move our hook_entity_bundle_info_alter() implementation to the top of the
+    // list, so that any other hook implementation can rely on bundles being
+    // correctly marked as translatable.
+    case 'alter_menu_forms':
+      $group = $implementations['m3dule'];
+      $implementations = [
+        'm3dule' => $group,
+      ] + $implementations;
+      break;
+  }
+}
+
+function m3dule_install() {
+   // db_query("UPDATE {system} SET weight = 12 WHERE name = 'm3dule'");
+   db_update('system')->fields(array('weight'=>999))->condition('name', 'm3dule', '=')->execute();
+ }

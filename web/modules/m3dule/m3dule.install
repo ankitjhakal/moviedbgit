@@ -1,0 +1,43 @@
+<?php
+function m3dule_schema() {
+  $schema['form_list'] = array(
+    'description' => 'data store for config form',
+    'fields' => array(
+      'title' => array(
+        'description' => 'The Title.',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => 'Title',
+      ),
+      'description' => array(
+        'description' => 'desc',
+        'type' => 'varchar',
+        'length' => 64,
+        'not null' => TRUE,
+        'default' => 'desc',
+      ),
+      'image' => array(
+        'description' => 'profile',
+        'type' => 'varchar',
+        'length' => 1000,
+        'not null' => TRUE,
+        'default' => 'image',
+      ),
+    ),
+);
+  return $schema;
+}
+
+// function m3dule_update_8804(&$sandbox) {
+//   // $install_module_list = array(
+//   //   'kint',
+//   // );
+//   $uninstall_module_list = array(
+//   'celebrate',
+//   );
+//   \Drupal::service('module_installer')->uninstall($uninstall_module_list);
+//   // module_disable($module_list, TRUE);
+//   // \Drupal::service('module_installer')->install($install_module_list);
+//   // module_enable($module_list, TRUE);
+// }

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * Implements hook_mail()
+ * @param type $key
+ * @param type $message
+ * @param type $params
+ */
+// function queueworker_mail($key, &$message, $params) {
+//   switch ($key) {
+//     case 'query_mail':
+//       $body = "Hi " .$params['username']. " Thanks for posting your Query => ". $params['message'].
+//       " Your username: " . $params['username'].
+//       " Your email: " . $params['from'];
+//       $message['from'] = $params['from'];
+//       $message['subject'] = $params['subject'];
+//       $message['body'][] = Drupal\Core\Mail\MailFormatHelper::htmlToText($body);
+//       break;
+//   }
+// }
