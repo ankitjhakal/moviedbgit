@@ -1,0 +1,5 @@
+name: 'Example Batch Processing'
+description: 'Provides an example of how to do custom batch processing.'
+type: module
+core: 8.x
+package: BT Examples

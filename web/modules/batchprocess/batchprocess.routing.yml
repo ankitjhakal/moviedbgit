@@ -1,0 +1,15 @@
+batchprocess.form:
+  path: '/batchprocess'
+  defaults:
+    _form: '\Drupal\batchprocess\Form\KickOffBatchForm'
+    _title: 'Batch Example'
+  requirements:
+    _permission: 'access content'
+
+batchprocess.multistep_form:
+  path: '/example_multistep'
+  defaults:
+    _form: '\Drupal\batchprocess\Form\MultistepBatchForm'
+    _title: 'Multistep Batch Example'
+  requirements:
+    _role: 'administrator'

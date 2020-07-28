@@ -1,0 +1,18 @@
+<table class="table table-dark table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">title</th>
+      <th style="width:120px;" scope="col">image</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+      <tr class="supercss">
+        <td>{{ item.title }}</td>
+        <td><img  width=100px src={{ item.url }} class="img-thumbnail"></td>
+        <td>{{ item.desc|render|striptags }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,4 @@
+administer m3dule:
+  title: 'Administer config Settings'
+  description: 'Access the config administrative settings page.'
+  restrict access: true

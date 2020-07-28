@@ -1,0 +1,94 @@
+m3dule_movie:
+  path: '/m3dule/movielist'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\PhpController::movie_list'
+    _title: 'movies database'
+  requirements:
+    _permission: 'access content'
+
+
+m3dule_placeblock:
+  path: '/placeblock'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\BlockController::placeBlock'
+    _title: 'movieslist through block list '
+  requirements:
+    _permission: 'access content'
+
+
+m3dule_placeblockwithDI:
+  path: '/placeblockwithDI'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\TestedDI::placeBlockwithDI'
+    _title: 'practicing DI '
+  requirements:
+    _permission: 'access content'
+
+m3dule_actor:
+  path: '/m3dule/actorlist'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\PhpController::actor_list'
+    _title: 'actors list with their recent movies'
+  requirements:
+    _permission: 'access content'
+
+m3dule_testentity:
+  path: '/actorlist'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\TestentityController::testEntity'
+    _title: 'actors list with their recent movies'
+  requirements:
+    _permission: 'access content'
+
+m3dule_actor_movielist:
+  path: '/movielist/{type}/{node}'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\PhpController::actor_movieslist'
+    _title: 'all movies of an actor'
+  requirements:
+    _permission: 'access content'
+
+m3dule_costar:
+  path: '/co-star/{movie}/{nid}'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\PhpController::costar'
+    _title: 'co-star detail'
+  requirements:
+    _permission: 'access content'
+
+
+m3dule.admin_settings:
+  path: '/admin/config/m3dule/adminsettings'
+  defaults:
+    _form: '\Drupal\m3dule\Form\TestForm'
+    _title: 'formtest configuration screen'
+  requirements:
+    _permission: 'administer site configuration'
+  options:
+    _admin_route: TRUE
+
+
+m3dule.ajaxform:
+  path: '/ajaxform'
+  defaults:
+    _form: '\Drupal\m3dule\Form\Ajaxform'
+    _title: 'Cool ajaxform '
+  requirements:
+    _permission: 'access content'
+
+
+m3dule.AjaxformWithJsCallback:
+  path: '/AjaxformWithJsCallback'
+  defaults:
+    _form: '\Drupal\m3dule\Form\AjaxformWithJsCallback'
+    _title: 'Cool ajaxform '
+  requirements:
+    _permission: 'access content'
+
+m3dule.listshow:
+  path: '/test'
+  defaults:
+    _controller: '\Drupal\m3dule\Controller\DataController::listshow'
+    _title: 'formtest '
+  requirements:
+    _permission: 'access content'

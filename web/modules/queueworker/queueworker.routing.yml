@@ -1,0 +1,7 @@
+queueworker.query_form:
+  path: '/user-query-form'
+  defaults:
+    _form: '\Drupal\queueworker\Form\UserQueryForm'
+    _title: 'Query Form'
+  requirements:
+    _permission: 'access content'
